@@ -1,0 +1,62 @@
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1280px; height:540px; overflow:hidden;
+         font-family:'Segoe UI',-apple-system,system-ui,sans-serif;
+         background:#0f1115; color:#f5f3f0; position:relative; }
+  .bg { position:absolute; inset:0;
+        background:
+          radial-gradient(900px 420px at 78% 18%, rgba(255,143,90,.16), transparent 60%),
+          radial-gradient(700px 420px at 12% 88%, rgba(120,84,60,.20), transparent 62%),
+          linear-gradient(160deg,#0f1115 0%,#15100e 55%,#1a1210 100%); }
+  .grid { position:absolute; inset:0; opacity:.05;
+          background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);
+          background-size:64px 64px; }
+  .wrap { position:relative; padding:60px 64px; height:100%; display:flex; flex-direction:column; }
+  .brandrow { display:flex; align-items:center; gap:12px; margin-bottom:30px; }
+  .dot { width:11px; height:11px; border-radius:50%; background:#ff8f5a; box-shadow:0 0 16px #ff8f5a; }
+  .brand { font-size:15px; letter-spacing:.20em; text-transform:uppercase; color:#b9b2aa; font-weight:600; }
+  h1 { font-size:78px; line-height:1.02; letter-spacing:-.028em; font-weight:800; }
+  h1 .accent { background:linear-gradient(96deg,#ff8f5a,#ffc48a); -webkit-background-clip:text;
+               background-clip:text; color:transparent; }
+  .sub { margin-top:20px; font-size:23px; color:#a9a29a; max-width:830px; line-height:1.5; }
+  .els { margin-top:auto; display:flex; flex-wrap:wrap; gap:9px; max-width:900px; }
+  .el { font-size:15.5px; padding:8px 15px; border-radius:999px; background:rgba(255,255,255,.045);
+        border:1px solid rgba(255,255,255,.10); color:#ddd6cf; }
+  .el.hot { border-color:rgba(255,143,90,.45); color:#ffb489; background:rgba(255,143,90,.09); }
+  .card { position:absolute; right:64px; top:150px; width:392px; border-radius:14px;
+          background:#0b0d11; border:1px solid rgba(255,255,255,.10);
+          box-shadow:0 30px 80px rgba(0,0,0,.6); overflow:hidden; }
+  .bar { display:flex; gap:6px; padding:11px 13px; background:rgba(255,255,255,.035);
+         border-bottom:1px solid rgba(255,255,255,.07); }
+  .b { width:10px; height:10px; border-radius:50%; }
+  .code { padding:15px 17px; font-family:'Cascadia Code',Consolas,monospace; font-size:13.5px; line-height:1.72; }
+  .k { color:#7fb2ff; } .s { color:#9ae6a0; } .n { color:#ffc48a; } .p { color:#6f6a64; }
+  .foot { position:absolute; right:64px; bottom:46px; font-size:14px; color:#6f6a64; }
+</style>
+<div class="bg"></div><div class="grid"></div>
+<div class="wrap">
+  <div class="brandrow"><div class="dot"></div><div class="brand">Chocodata</div></div>
+  <h1>Walmart <span class="accent">Scraper</span></h1>
+  <div class="sub">Extract product prices, ratings, reviews, specifications and bestsellers from Walmart.com as structured JSON.</div>
+  <div class="els">
+    <div class="el hot">prices</div><div class="el hot">titles</div><div class="el">descriptions</div>
+    <div class="el hot">specifications</div><div class="el hot">ratings</div><div class="el hot">reviews</div>
+    <div class="el">search results</div><div class="el">bestsellers</div><div class="el">sellers</div>
+    <div class="el">UPC / GTIN</div><div class="el">inventory</div><div class="el">category filters</div>
+  </div>
+</div>
+<div class="card">
+  <div class="bar"><div class="b" style="background:#ff5f57"></div><div class="b" style="background:#febc2e"></div><div class="b" style="background:#28c840"></div></div>
+  <div class="code">
+    <div><span class="p">{</span></div>
+    <div>&nbsp;&nbsp;<span class="k">"title"</span>: <span class="s">"HP 14 inch HD Laptop..."</span>,</div>
+    <div>&nbsp;&nbsp;<span class="k">"price"</span>: <span class="n">229</span>,</div>
+    <div>&nbsp;&nbsp;<span class="k">"currency"</span>: <span class="s">"USD"</span>,</div>
+    <div>&nbsp;&nbsp;<span class="k">"rating"</span>: <span class="n">4.2</span>,</div>
+    <div>&nbsp;&nbsp;<span class="k">"reviews_count"</span>: <span class="n">320</span>,</div>
+    <div>&nbsp;&nbsp;<span class="k">"seller"</span>: <span class="s">"Walmart.com"</span>,</div>
+    <div>&nbsp;&nbsp;<span class="k">"out_of_stock"</span>: <span class="n">false</span></div>
+    <div><span class="p">}</span></div>
+  </div>
+</div>
+<div class="foot">6 endpoints · real JSON · no headless browser</div>
