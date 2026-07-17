@@ -47,7 +47,7 @@ That is the whole point of this repo. The rest of this page is the free script, 
 - [Walmart Scraper API reference](#walmart-scraper-api-reference)
   - [Quickstart](#quickstart) · [Authentication](#authentication) · [Global parameters](#global-parameters) · [Errors](#errors) · [Rate limits and concurrency](#rate-limits-and-concurrency)
   - [1. Search](#1-search-product-listings-prices-and-ratings) · [2. Product](#2-product-full-product-data-specifications-and-upcgtin) · [3. Reviews](#3-reviews-customer-ratings-and-review-text) · [4. Bestsellers](#4-bestsellers-top-selling-product-listings-by-category) · [5. Filters](#5-filters-category-facets-and-sort-options) · [6. Related queries](#6-related-queries-walmart-keyword-research-data)
-- [Price monitoring: a real use case](#a-real-use-case-price-monitoring)
+- [Monitor Walmart price changes](#monitor-walmart-price-changes)
 - [Measured latency](#measured-latency)
 
 ---
@@ -106,7 +106,7 @@ Two things worth knowing before you go shopping for a free alternative. Every ot
 
 ### Using the Chocodata Walmart Scraper API
 
-The managed option, and the one this repo is built around. Six endpoints for Walmart product data extraction at scale (search listings, product pages, reviews, bestsellers, category filters and related queries), a ~99% success rate against the bot check, and no proxy management. Free for the first 1,000 requests.
+The [Chocodata Walmart Scraper API](https://chocodata.com/scraper-api/walmart?utm_source=github&utm_medium=repo&utm_campaign=walmart-scraper) is the managed option, and the one this repo is built around. Six endpoints for Walmart product data extraction at scale (search listings, product pages, reviews, bestsellers, category filters and related queries), a ~99% success rate against the bot check, and no proxy management. Free for the first 1,000 requests.
 
 ---
 
@@ -528,7 +528,7 @@ Runnable: [`walmart_scraper_api_codes/related_queries.py`](walmart_scraper_api_c
 
 ---
 
-## A real use case: price monitoring
+## Monitor Walmart price changes
 
 Competitor price monitoring is the main reason people scrape Walmart, so that use case is in the repo end to end rather than as a snippet. [`price_monitor.py`](walmart_scraper_api_codes/price_monitor.py) polls a search in near real time, stores every observation as a local dataset in SQLite (export it to CSV with one `sqlite3` command), and prints the diff since the last run:
 
