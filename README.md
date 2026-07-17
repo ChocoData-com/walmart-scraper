@@ -4,9 +4,9 @@
 
 **Walmart Scraper for extracting product prices, titles, descriptions, specifications, ratings, reviews, search results and bestsellers from Walmart.com.** This repo has a free Walmart web scraping script you can run right now, and a Walmart product data API with 6 endpoints returning real structured JSON.
 
-**Last updated: 2026-07-16.** Working against Walmart.com as of July 2026, and re-verified whenever Walmart changes their markup.
+**Last updated: 2026-07-17.** Working against Walmart.com as of July 2026, and re-verified whenever Walmart changes their markup.
 
-Every JSON block on this page was captured from the live API on 2026-07-14. Long arrays are trimmed to the first item or two (each block says exactly what was cut); **every field shown is verbatim**, nothing is rewritten, padded, or invented. Full uncut samples are committed in [`walmart_scraper_api_data/`](walmart_scraper_api_data), so you can diff this page against them. Every code example calls the actual API and is runnable from [`walmart_scraper_api_codes/`](walmart_scraper_api_codes).
+Every JSON block on this page was captured from the live API on 2026-07-14, with long arrays trimmed to the first item or two and each block noting exactly what was cut. The full uncut samples are committed in [`walmart_scraper_api_data/`](walmart_scraper_api_data), and every code example calls the API and is runnable from [`walmart_scraper_api_codes/`](walmart_scraper_api_codes).
 
 ```bash
 pip install requests
@@ -35,7 +35,7 @@ Those three lines return this, live from Walmart.com:
 
 ![Retrieved Walmart product data](assets/retrieved-data.png)
 
-That is the whole point of this repo. The rest of this page is how it works, what it costs, and where it stops.
+That is the whole point of this repo. The rest of this page is the free script, the wall it hits, and the six endpoints with the parameters and response for each.
 
 ---
 
@@ -48,7 +48,6 @@ That is the whole point of this repo. The rest of this page is how it works, wha
   - [Quickstart](#quickstart) · [Authentication](#authentication) · [Global parameters](#global-parameters) · [Errors](#errors) · [Rate limits and concurrency](#rate-limits-and-concurrency)
   - [1. Search](#1-search-product-listings-prices-and-ratings) · [2. Product](#2-product-full-product-data-specifications-and-upcgtin) · [3. Reviews](#3-reviews-customer-ratings-and-review-text) · [4. Bestsellers](#4-bestsellers-top-selling-product-listings-by-category) · [5. Filters](#5-filters-category-facets-and-sort-options) · [6. Related queries](#6-related-queries-walmart-keyword-research-data)
 - [Price monitoring: a real use case](#a-real-use-case-price-monitoring)
-- [Build vs buy: what this actually costs](#build-vs-buy-what-this-actually-costs)
 - [Measured latency](#measured-latency)
 
 ---
@@ -67,7 +66,7 @@ After running the command, your terminal should look something like this:
 
 ![Free Walmart scraper blocked by the bot check](assets/run-blocked.png)
 
-That is the honest outcome, and the next section is about why.
+That is the outcome, and the next section is about why.
 
 ## Avoid getting blocked when scraping Walmart
 
@@ -78,7 +77,7 @@ BLOCKED: got a bot-check interstitial instead of results (HTTP 200).
 A 200 does not mean success. Check for the challenge page before parsing.
 ```
 
-Here is the raw evidence behind that message, so you do not have to take our word for it:
+Here is the raw evidence behind that message:
 
 | What we measured | Value |
 |---|---|
@@ -101,7 +100,7 @@ A 15 KB page titled "Robot or human?" returned with a 200 status. That single ro
 | **The JSON path moves** | `itemStacks` and the `__NEXT_DATA__` shape change a few times a year. Your parser silently returns `[]`. | Ongoing maintenance, plus alerting smart enough to tell "empty" from "broken". |
 | **Per-geo pricing** | Walmart localises price and availability to the IP it sees. Uncontrolled egress returns a different currency per call. | Prices you cannot compare to each other, which is fatal for repricing. |
 
-Two things worth knowing before you go shopping for a free alternative. Every other "free Walmart scraper" on GitHub hits the same wall this one does: the ones that are honest are blocked, and several of the ones that look like they work are wrappers that need a paid vendor's API key anyway. And the wall is not a code problem: it is the reason the API below exists.
+Two things worth knowing before you go shopping for a free alternative. Every other "free Walmart scraper" on GitHub hits the same wall this one does: the ones that fetch Walmart directly are blocked, and several of the ones that look like they work are wrappers that need a paid vendor's API key anyway. And the wall is not a code problem: it is the reason the API below exists.
 
 ---
 
@@ -113,7 +112,7 @@ The managed option, and the one this repo is built around. Six endpoints for Wal
 
 ## Walmart Scraper API reference
 
-Every response below is real. No login, no browser.
+Below is the Walmart Scraper API reference: authentication, the global parameters, errors and rate limits, then each of the six endpoints with its parameters and response.
 
 ### Quickstart
 
@@ -362,7 +361,7 @@ Runnable: [`walmart_scraper_api_codes/product.py`](walmart_scraper_api_codes/pro
 
 ### 3. Reviews: customer ratings and review text
 
-Customer reviews plus the full star distribution, by `us_item_id`.
+The 10 most recent customer reviews plus the full star distribution across every review, by `us_item_id`.
 
 | Param | Type | Required | Default | Description |
 |---|---|---|---|---|
@@ -399,8 +398,6 @@ curl "https://api.chocodata.com/api/v1/walmart/reviews?api_key=YOUR_KEY&id=18611
 ```
 
 The `rating_distribution` is the useful part: a 4.2 average built from 219 fives and 43 ones is a very different product from a flat 4.2, and the distribution covers **all 320** reviews even though only 10 bodies come back.
-
-**Ceiling, read this before you buy:** this endpoint returns the **10 most recent review bodies** plus the complete `rating_distribution` for all 320. There is no `page` param and no deeper pagination. If your use case is "score sentiment from the distribution and read the latest complaints", this is exactly right. If your use case is "export every review body for a product", **this endpoint will not do it and you should not buy for that**.
 
 Running it:
 
@@ -446,7 +443,7 @@ curl "https://api.chocodata.com/api/v1/walmart/bestsellers?api_key=YOUR_KEY&cate
 }
 ```
 
-**Ceiling:** this returns the single bestsellers page Walmart renders (59 rows here). There is no `page` param and no deeper paging. Note `seller: "PCOnline US"`: Walmart's bestseller ranks include marketplace sellers, not just Walmart itself.
+This returns the bestsellers page Walmart renders, 59 rows for `electronics`. Note `seller: "PCOnline US"`: Walmart's bestseller ranks include marketplace sellers, not just Walmart itself.
 
 Runnable: [`walmart_scraper_api_codes/bestsellers.py`](walmart_scraper_api_codes/bestsellers.py)
 
@@ -494,7 +491,7 @@ curl "https://api.chocodata.com/api/v1/walmart/filters?api_key=YOUR_KEY&query=la
 }
 ```
 
-**Ceiling:** `count` is `null` on every facet value here. Walmart does not render per-facet result counts on this surface, so we return null rather than invent a number. You get the facet taxonomy (20 groups for `laptop`), not the histogram.
+`count` is `null` on every facet value: Walmart does not render per-facet result counts on this surface. You get the facet taxonomy, 20 groups for `laptop`, not the histogram.
 
 Runnable: [`walmart_scraper_api_codes/filters.py`](walmart_scraper_api_codes/filters.py)
 
@@ -547,38 +544,6 @@ says so. Run it again after prices move and each change prints as a diff line
 [`price_monitor.py`](walmart_scraper_api_codes/price_monitor.py).
 
 One API call per run, per query. 1,000 free requests covers roughly a month of hourly checks on one query.
-
----
-
-## Build vs buy: what this actually costs
-
-Most scraper READMEs skip this analysis. Here are the numbers, with assumptions stated so you can argue with them.
-
-**Building it yourself**
-
-| Line item | Realistic estimate | Notes |
-|---|---|---|
-| Initial build | 3 to 5 dev days | Parser, proxy integration, retry/backoff, challenge detection, alerting. |
-| Residential proxies | ~$3 to $8/GB retail | Datacenter IPs are pre-blocked (see above), so this is not optional at volume. |
-| Bandwidth per request | **~156 KB on the wire** | Measured 2026-07-16: a Walmart search page is 1,214,133 bytes of HTML that gzips 7.8x to 155,757 bytes. Proxies bill the compressed transfer, not the decoded size, so at $3 to $8/GB this is **$0.0005 to $0.0012 per request**. |
-| Maintenance | ~1 to 2 days per break | The `__NEXT_DATA__` path moves a few times a year. Plus the on-call cost of noticing. |
-| Silent-failure risk | hard to price | The expensive failure is not a crash, it is 3 weeks of `[]` that looked like "no results". |
-
-**Buying it**
-
-| Plan | Price | Requests | Effective per 1,000 |
-|---|---|---|---|
-| Free | $0 | 1,000 (one-time) | - |
-| Vibe | $19/mo | 27,000/mo | $0.70 |
-| Pro | $49/mo | 82,000/mo | $0.60 |
-| Custom | from $100/mo | from 200,000/mo | $0.50 flat |
-| Pay-as-you-go top-up | $0.90 / 1,000 | never expires | $0.90 |
-
-The comparison that matters, and we are going to argue against ourselves for a second. At Pro a parsed Walmart response costs about **$0.0006**. Fetching that same page yourself costs **$0.0005 to $0.0012** in residential bandwidth, depending on your proxy rate. Those are the same number. **Bandwidth alone does not make the case**, and if you found a vendor at the cheap end of that range, the raw bytes are cheaper than we are.
-
-What actually decides it is everything next to the bytes: the 3 to 5 days to build it, the 1 to 2 days every time the `__NEXT_DATA__` path moves, the alerting you have to write to tell "blocked" from "no results", and the weeks of silently empty data you eat when you get that wrong. That is the bill, and it does not show up in a bandwidth calculation.
-
-Build it yourself when scraping is your product. Buy it when scraping is a dependency of your product: for most e-commerce use cases (repricing, competitive intelligence, catalogue enrichment) it is a dependency.
 
 ---
 
