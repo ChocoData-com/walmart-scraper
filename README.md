@@ -182,17 +182,9 @@ curl "https://api.chocodata.com/api/v1/walmart/search?api_key=totally_invalid_ke
 {"error":{"code":"INVALID_API_KEY","message":"Api key not recognised."}}
 ```
 
-A dead product id, verbatim. Note it tells you what it tried, whether to retry, and that you were not charged:
-
-```json
-{
-  "error": "item_not_found",
-  "message": "The target returned 404 for this request - the item or identifier does not exist. Check the id or URL. You were not charged.",
-  "attempts": 1,
-  "attempted_tiers": ["paid-residential"],
-  "retryable": false
-}
-```
+A dead product id returns `404 item_not_found` with `retryable: false`. The message names the cause
+and confirms you were not charged: `The target returned 404 for this request - the item or
+identifier does not exist. Check the id or URL. You were not charged.`
 
 ### Rate limits and concurrency
 
