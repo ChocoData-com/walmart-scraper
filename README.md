@@ -136,7 +136,7 @@ After running the command, your terminal should look something like this:
 
 ![Running the Walmart Scraper API search endpoint](assets/run-search.png)
 
-Get a key at [chocodata.com](https://chocodata.com) (1,000 requests, one-time, no card).
+Get a key at chocodata.com (1,000 requests, one-time, no card).
 
 ### Authentication
 
@@ -161,7 +161,7 @@ Real captured error bodies, not paraphrases. Nothing below is billed: **you are 
 | Status | `error` code | Meaning | Billed | What to do |
 |---|---|---|---|---|
 | `400` | `invalid_params` | A required param is missing or the wrong type. Body lists the exact issue and `path`. | no | Fix the query string. |
-| `401` | `INVALID_API_KEY` | Key missing, unrecognised, or revoked. | no | Check `api_key`. Get one at [chocodata.com](https://chocodata.com). |
+| `401` | `INVALID_API_KEY` | Key missing, unrecognised, or revoked. | no | Check `api_key`. Get one at chocodata.com. |
 | `402` | `INSUFFICIENT_CREDITS` | Balance exhausted. | no | Top up ($0.90 / 1,000 requests, never expires) or upgrade. |
 | `404` | `item_not_found` | The target returned 404: the id/URL does not exist. `retryable: false`. | no | Fix the id. Retrying will not help. |
 | `429` | `RATE_LIMITED` | Over your plan's concurrency. | no | Back off and retry; see [Rate limits](#rate-limits-and-concurrency). |

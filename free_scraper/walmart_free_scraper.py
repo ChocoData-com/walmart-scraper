@@ -7,15 +7,14 @@ request gets through you can pull structured products out without a headless bro
     pip install requests
     python free_scraper/walmart_free_scraper.py "laptop"
 
-This is the honest DIY baseline, and the honest result is that it usually does not work.
-Run against walmart.com on 2026-07-14 it was blocked on 4 of 4 attempts from a clean
-residential IP: HTTP 200, 15,190 bytes, <title>Robot or human?</title>, no __NEXT_DATA__
-at all. See "Avoid getting blocked when scraping Walmart" in the README.
+Fetches the search page with plain requests and parses what comes back. Run against
+walmart.com on 2026-07-14 it was blocked on 4 of 4 attempts from a clean residential IP:
+HTTP 200, 15,190 bytes, <title>Robot or human?</title>, no __NEXT_DATA__ at all. See
+"Avoid getting blocked when scraping Walmart" in the README.
 
-It is kept here because it is honest and it is instructive, not because it is a working
-product. It parses first and only calls something a block when __NEXT_DATA__ is genuinely
-absent, so it cannot cry wolf, and when it does get blocked it tells you exactly why
-instead of silently returning an empty list.
+It parses first and only reports a block when __NEXT_DATA__ is genuinely absent, so it
+does not false-positive, and when it is blocked it reports why instead of silently
+returning an empty list.
 """
 import json
 import re

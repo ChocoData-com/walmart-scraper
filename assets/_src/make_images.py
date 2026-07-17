@@ -138,7 +138,7 @@ def hero():
 
 
 def evidence():
-    """The honest side-by-side: what the free script gets vs what the API returns."""
+    """Side by side: what the free script returns vs the API."""
     W, H = 1280, 420
     img = vgrad(W, H, (15, 17, 21), (22, 16, 15))
     d = ImageDraw.Draw(img)
