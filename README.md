@@ -353,7 +353,10 @@ Runnable: [`walmart_scraper_api_codes/product.py`](walmart_scraper_api_codes/pro
 
 ### 3. Reviews: customer ratings and review text
 
-The 10 most recent customer reviews plus the full star distribution across every review, by `us_item_id`.
+A 10-review sample plus the full star distribution across every review, by `us_item_id`. The sample
+comes back rating-ordered rather than newest-first: on item `504346078` (1,912 reviews) the ratings
+run `5,5,5,5,5,5,5,4,1,1` and the dates span August 2023 to July 2026. Sort by `date` yourself if you
+need recency, and use `rating_distribution` when you want a figure covering all reviews.
 
 | Param | Type | Required | Default | Description |
 |---|---|---|---|---|
