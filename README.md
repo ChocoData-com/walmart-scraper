@@ -95,7 +95,7 @@ A 15 KB page titled "Robot or human?" returned with a 200 status. That single ro
 | What bites you | Why | What it costs you |
 |---|---|---|
 | **HTTP 200 is not success** | Walmart serves its bot check with a `200` status, not a `403`. A naive scraper parses it, finds nothing, and logs "0 results" rather than "blocked". | The expensive failure is not a crash. It is three weeks of empty data that looked like "no results". |
-| **It is not a header problem** | Walmart fingerprints the connection itself, not just the `User-Agent`. No combination of headers makes a stock HTTP client look like a browser. | You cannot patch your way out in code. It is an infrastructure problem. |
+| **It is not a header problem** | Swapping in a browser `User-Agent` changed nothing: same status, same byte count, same page. No combination of headers makes a stock HTTP client look like a browser. | You cannot patch your way out in code. It is an infrastructure problem. |
 | **Datacenter IPs are pre-blocked** | AWS, GCP and Azure ranges are well known. This is why the script above fails instantly from CI even when it works from your laptop. | Clean IP supply is a recurring bill, not a one-off fix. |
 | **The JSON path moves** | `itemStacks` and the `__NEXT_DATA__` shape change a few times a year. Your parser silently returns `[]`. | Ongoing maintenance, plus alerting smart enough to tell "empty" from "broken". |
 | **Per-geo pricing** | Walmart localises price and availability to the IP it sees. Uncontrolled egress returns a different currency per call. | Prices you cannot compare to each other, which is fatal for repricing. |
@@ -165,7 +165,7 @@ Real captured error bodies, not paraphrases. Nothing below is billed: **you are 
 | `402` | `INSUFFICIENT_CREDITS` | Balance exhausted. | no | Top up ($0.90 / 1,000 requests, never expires) or upgrade. |
 | `404` | `item_not_found` | The target returned 404: the id/URL does not exist. `retryable: false`. | no | Fix the id. Retrying will not help. |
 | `429` | `RATE_LIMITED` | Over your plan's concurrency. | no | Back off and retry; see [Rate limits](#rate-limits-and-concurrency). |
-| `502` | `target_unreachable` | Walmart refused every attempt for this request. `retryable: true`. | no | Retry. This is the case the free scraper hits permanently. |
+| `502` | `target_unreachable` | Walmart refused every attempt for this request. `retryable: true`. | no | Retry. This is the case the free scraper hit on every attempt we made. |
 
 Two response shapes exist: auth/billing errors nest under `error.code` (uppercase), while scrape-layer errors are flat with a lowercase `error` string plus `retryable`. Both are shown below.
 
