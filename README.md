@@ -100,7 +100,7 @@ A 15 KB page titled "Robot or human?" returned with a 200 status. That single ro
 | **The JSON path moves** | `itemStacks` and the `__NEXT_DATA__` shape change a few times a year. Your parser silently returns `[]`. | Ongoing maintenance, plus alerting smart enough to tell "empty" from "broken". |
 | **Per-geo pricing** | Walmart localises price and availability to the IP it sees. Uncontrolled egress returns a different currency per call. | Prices you cannot compare to each other, which is fatal for repricing. |
 
-Two things worth knowing before you go shopping for a free alternative. Every other "free Walmart scraper" on GitHub hits the same wall this one does: the ones that fetch Walmart directly are blocked, and several of the ones that look like they work are wrappers that need a paid vendor's API key anyway. And the wall is not a code problem: it is the reason the API below exists.
+Two things worth knowing before you go shopping for a free alternative. The free Walmart scrapers we checked hit the same wall this one does: the ones that fetch Walmart directly are blocked, and several of the ones that look like they work are wrappers that need a paid vendor's API key anyway. And the wall is not a code problem: it is the reason the API below exists.
 
 ---
 
