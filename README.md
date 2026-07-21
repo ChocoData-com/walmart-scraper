@@ -347,7 +347,7 @@ Running it:
 
 ![Walmart product endpoint output](assets/run-product.png)
 
-Runnable: [`walmart_scraper_api_codes/product.py`](walmart_scraper_api_codes/product.py)
+Runnable: [`walmart_scraper_api_codes/product.py`](walmart_scraper_api_codes/product.py) · Single-endpoint repo: [walmart-product-scraper](https://github.com/ChocoData-com/walmart-product-scraper)
 
 ---
 
@@ -398,7 +398,7 @@ Running it:
 
 ![Walmart reviews endpoint output with rating distribution](assets/run-reviews.png)
 
-Runnable: [`walmart_scraper_api_codes/reviews.py`](walmart_scraper_api_codes/reviews.py)
+Runnable: [`walmart_scraper_api_codes/reviews.py`](walmart_scraper_api_codes/reviews.py) · Single-endpoint repo: [walmart-reviews-scraper](https://github.com/ChocoData-com/walmart-reviews-scraper)
 
 ---
 
@@ -440,7 +440,7 @@ curl "https://api.chocodata.com/api/v1/walmart/bestsellers?api_key=YOUR_KEY&cate
 
 This returns the bestsellers page Walmart renders, 59 rows for `electronics`. Note `seller: "PCOnline US"`: Walmart's bestseller ranks include marketplace sellers, not just Walmart itself.
 
-Runnable: [`walmart_scraper_api_codes/bestsellers.py`](walmart_scraper_api_codes/bestsellers.py)
+Runnable: [`walmart_scraper_api_codes/bestsellers.py`](walmart_scraper_api_codes/bestsellers.py) · Single-endpoint repo: [walmart-best-sellers-scraper](https://github.com/ChocoData-com/walmart-best-sellers-scraper)
 
 ---
 
@@ -488,7 +488,7 @@ curl "https://api.chocodata.com/api/v1/walmart/filters?api_key=YOUR_KEY&query=la
 
 `count` is `null` on every facet value: Walmart does not render per-facet result counts on this surface. You get the facet taxonomy, 20 groups for `laptop`, not the histogram.
 
-Runnable: [`walmart_scraper_api_codes/filters.py`](walmart_scraper_api_codes/filters.py)
+Runnable: [`walmart_scraper_api_codes/filters.py`](walmart_scraper_api_codes/filters.py) · Single-endpoint repo: [walmart-filters-scraper](https://github.com/ChocoData-com/walmart-filters-scraper)
 
 ---
 
@@ -519,7 +519,7 @@ curl "https://api.chocodata.com/api/v1/walmart/relatedqueries?api_key=YOUR_KEY&q
 }
 ```
 
-Runnable: [`walmart_scraper_api_codes/related_queries.py`](walmart_scraper_api_codes/related_queries.py)
+Runnable: [`walmart_scraper_api_codes/related_queries.py`](walmart_scraper_api_codes/related_queries.py) · Single-endpoint repo: [walmart-relatedqueries-scraper](https://github.com/ChocoData-com/walmart-relatedqueries-scraper)
 
 ---
 
